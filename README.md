@@ -193,11 +193,11 @@ This project is intended for educational and learning purposes. Add an appropria
 
 ## 👨‍💻 Author
 
-**Your Name**
+**Himesh Pandey**
 
 AI/ML Enthusiast | Python | Natural Language Processing | Hugging Face Transformers
 
-GitHub: [
+GitHub: [https://github.com/Himeshpandey/Text-summarizer.git]
 ---
 
 ⭐ If you find this project useful, consider giving the repository a star!
