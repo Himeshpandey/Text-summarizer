@@ -1,21 +1,31 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import T5ForConditionalGeneration, T5Tokenizer
 import torch
-import re 
-from fastapi.templating import Jinja2Templates # UI
+import re
+from fastapi.templating import Jinja2Templates  # UI
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(title="Text Summarizer App", description="Text Summarization using T5", version="1.0")
+from fastapi.responses import FileResponse
 
-model = T5ForConditionalGeneration.from_pretrained("./saved_summary_model")
-tokenizer = T5Tokenizer.from_pretrained("./saved_summary_model")
+@app.get("/")
+def read_root():
+    return FileResponse("index.html")
+MODEL_PATH = "./saved_summary_model"
+MODEL_NAME = "t5-small"
+
+try:
+    model = T5ForConditionalGeneration.from_pretrained(MODEL_PATH)
+    tokenizer = T5Tokenizer.from_pretrained(MODEL_PATH)
+except OSError:
+    model = T5ForConditionalGeneration.from_pretrained(MODEL_NAME)
+    tokenizer = T5Tokenizer.from_pretrained(MODEL_NAME)
 
 # device
 if torch.backends.mps.is_available():
     device = torch.device("mps")
-elif torch.cuda.is_availanle():
+elif torch.cuda.is_available():
     device = torch.device("cuda")
 else:
     device = torch.device("cpu")
